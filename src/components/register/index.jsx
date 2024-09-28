@@ -11,19 +11,19 @@ import Chip from "@mui/joy/Chip";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InfoOutlined from "@mui/icons-material/InfoOutlined";
-
-// local imports
 import ValidationRules from "../../utils/validations";
 
-export default function Login() {
-  const [loginState, setLoginState] = useState({
+export default function Registration() {
+  const [registrationState, setRegistrationState] = useState({
     email: "",
     password: "",
+    passwordCheck: "",
   });
 
-  const [loginErrorState, setLoginErrorState] = useState({
+  const [registrationError, setRegistrationError] = useState({
     email: "",
     password: "",
+    passwordCheck: "",
   });
 
   const [generalError, setGeneralError] = useState("");
@@ -32,7 +32,7 @@ export default function Login() {
     const {name = '', value = ''} = event.target;
 
     if (name && value) {
-        setLoginState(prevState => {
+        setRegistrationState(prevState => {
             return {...prevState, [name]: value};
         });
     }
@@ -41,33 +41,39 @@ export default function Login() {
   };
 
   const handleFormSubmit = event => {
-    event.stopPropagation();
     event.preventDefault();
+    event.stopPropagation();
+    
+    const emailValidation = ValidationRules.validateEmail(registrationState['email']);
+    const passwordValidation = ValidationRules.validatePassword(registrationState['password']);
 
-    // take values from the state and validate them
-    const emailValidation = ValidationRules.validateEmail(loginState['email']);
-    const passwordValidation = ValidationRules.validatePassword(loginState['password']);
+    const newRegistrationErrorState = {...registrationError};
 
-    const newLoginErrorState = {...loginErrorState};
+    if (registrationState["password"] !== registrationState["passwordCheck"]) {
+        newRegistrationErrorState.passwordCheck = "Passwords do not match";
+    } else {
+        newRegistrationErrorState.passwordCheck = "";
+    }
 
     if (emailValidation?.['error']) {
-        newLoginErrorState.email = emailValidation['error'];
+        newRegistrationErrorState.email = emailValidation['error'];
     } else if (emailValidation?.['success']) {
-        newLoginErrorState.email = '';
+        newRegistrationErrorState.email = '';
     }
 
     if (passwordValidation?.['error']) {
-        newLoginErrorState.password = passwordValidation['error'];
+        newRegistrationErrorState.password = passwordValidation['error'];
     } else if (passwordValidation?.['success']) {
-        newLoginErrorState.password = '';
+        newRegistrationErrorState.password = '';
     }
 
-    setLoginErrorState(newLoginErrorState);
+    setRegistrationError(newRegistrationErrorState);
 
-    // only continue when there is no validation error reported.
-    if (passwordValidation?.['success'] && emailValidation?.['success']) {
-        // make API call to login API
+    // if there are no errors, we make registration calls
+    if (!newRegistrationErrorState.email && !newRegistrationErrorState.password && !newRegistrationErrorState.passwordCheck) {
+        
     }
+
   };
 
   return (
@@ -90,32 +96,44 @@ export default function Login() {
       >
         <form style={{ width: "100%" }} onSubmit={handleFormSubmit}>
           <Stack spacing={2}>
-            <FormControl error={loginErrorState["email"]}>
+            <FormControl error={registrationError['email'] ? true: false}>
               <FormLabel>Email</FormLabel>
-              <Input name="email" value={loginState['email']} placeholder="m@example.com" fullWidth onChange={handleFormChange}/>
-              {loginErrorState["email"] ? (
+              <Input name="email" value={registrationState['email']} placeholder="m@example.com" fullWidth onChange={handleFormChange}/>
+              {registrationError["email"] ? (
                 <FormHelperText>
                   <InfoOutlined />
-                  {loginErrorState["email"]}
+                  {registrationError["email"]}
                 </FormHelperText>
               ) : (
                 <></>
               )}
             </FormControl>
-            <FormControl error={loginErrorState['password']}>
+            <FormControl error={registrationError['password'] ? true: false}>
               <FormLabel>Password</FormLabel>
-              <Input name="password" value={loginState['password']} type="password" fullWidth onChange={handleFormChange}/>
-              {loginErrorState["password"] ? (
+              <Input name="password" value={registrationState['password']} type="password" fullWidth onChange={handleFormChange}/>
+              {registrationError["password"] ? (
                 <FormHelperText>
                   <InfoOutlined />
-                  {loginErrorState["password"]}
+                  {registrationError["password"]}
+                </FormHelperText>
+              ) : (
+                <></>
+              )}
+            </FormControl>
+            <FormControl error={registrationError['passwordCheck'] ? true: false}>
+              <FormLabel>Re-enter your password</FormLabel>
+              <Input name="passwordCheck" value={registrationState['passwordCheck']} type="password" fullWidth onChange={handleFormChange}/>
+              {registrationError["passwordCheck"] ? (
+                <FormHelperText>
+                  <InfoOutlined />
+                  {registrationError["passwordCheck"]}
                 </FormHelperText>
               ) : (
                 <></>
               )}
             </FormControl>
             <Button type="submit" variant="solid">
-              Login
+              Register
             </Button>
           </Stack>
         </form>
@@ -125,10 +143,10 @@ export default function Login() {
           </Chip>
         </Divider>
         <Button startDecorator={<GoogleIcon />} sx={{ width: "100%" }}>
-          Login with Google
+          Register with Google
         </Button>
         <Button startDecorator={<FacebookIcon />} sx={{ width: "100%" }}>
-          Login with Facebook
+          Register with Facebook
         </Button>
       </Box>
     </div>
