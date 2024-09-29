@@ -148,6 +148,10 @@ export default function Registration() {
         <Button startDecorator={<FacebookIcon />} sx={{ width: "100%" }}>
           Register with Facebook
         </Button>
+        <Divider></Divider>
+        <Chip variant="soft" color="neutral" size="sm">
+            Want to register yourself? Click here.
+        </Chip>
       </Box>
     </div>
   );

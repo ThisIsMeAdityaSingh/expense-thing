@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import '@fontsource/inter';
 
 // local imports
-import { Registration } from './components';
+import { Registration, Login } from './components';
 
 
 const rootElement = document.getElementById('root');
@@ -17,7 +17,7 @@ const RenderComponent = props => {
 root.render(
     <React.StrictMode>
         <RenderComponent>
-            <Registration />
+            <Login />
         </RenderComponent>
     </React.StrictMode>
 );

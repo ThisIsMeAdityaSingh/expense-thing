@@ -130,6 +130,10 @@ export default function Login() {
         <Button startDecorator={<FacebookIcon />} sx={{ width: "100%" }}>
           Login with Facebook
         </Button>
+        <Divider></Divider>
+        <Chip variant="soft" color="neutral" size="sm">
+            Want to register yourself? Click here.
+        </Chip>
       </Box>
     </div>
   );
