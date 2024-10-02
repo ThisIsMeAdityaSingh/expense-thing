@@ -12,6 +12,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InfoOutlined from "@mui/icons-material/InfoOutlined";
 import ValidationRules from "../../utils/validations";
+import { Link } from 'react-router-dom';
 
 export default function Registration() {
   const [registrationState, setRegistrationState] = useState({
@@ -150,7 +151,7 @@ export default function Registration() {
         </Button>
         <Divider></Divider>
         <Chip variant="soft" color="neutral" size="sm">
-            Want to register yourself? Click here.
+            Want to register yourself? Click <Link to={"/"}>here</Link>.
         </Chip>
       </Box>
     </div>

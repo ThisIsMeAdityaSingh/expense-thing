@@ -1,23 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import '@fontsource/inter';
+import { RouterProvider } from 'react-router-dom';
 
 // local imports
-import { Registration, Login } from './components';
+import { router } from './routes/index';
 
 
 const rootElement = document.getElementById('root');
-
 const root = ReactDOM.createRoot(rootElement);
 
-const RenderComponent = props => {
-    return <React.Suspense fallback={<p>...Loading</p>}>{props.children}</React.Suspense>
-};
 
 root.render(
     <React.StrictMode>
-        <RenderComponent>
-            <Login />
-        </RenderComponent>
+        <RouterProvider router={router}></RouterProvider>
     </React.StrictMode>
 );

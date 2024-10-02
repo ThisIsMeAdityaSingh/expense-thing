@@ -11,6 +11,7 @@ import Chip from "@mui/joy/Chip";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InfoOutlined from "@mui/icons-material/InfoOutlined";
+import {Link} from 'react-router-dom';
 
 // local imports
 import ValidationRules from "../../utils/validations";
@@ -132,7 +133,7 @@ export default function Login() {
         </Button>
         <Divider></Divider>
         <Chip variant="soft" color="neutral" size="sm">
-            Want to register yourself? Click here.
+            Want to register yourself? Click <Link to={'/register'}>here</Link>.
         </Chip>
       </Box>
     </div>
